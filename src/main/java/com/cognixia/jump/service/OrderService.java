@@ -31,6 +31,7 @@ public class OrderService {
         return repo.findById(id).get();
     }
 	
+	// update the order.
 	public void orderUpdate(Long id, Orders order){
         Orders tempOrder = repo.findById(id).get();
         tempOrder.setOrder_status(order.getOrder_status());
