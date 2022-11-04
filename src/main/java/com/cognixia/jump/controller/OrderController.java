@@ -29,13 +29,13 @@ public class OrderController {
 
 	// get all products
 	@GetMapping("/all")
-	public List<Orders> getAllproducts() {
+	public List<Orders> getAllOrder() {
 		return repo.findAll();
 
 	}
 
 	@PostMapping("/new")
-	public ResponseEntity<?> createProduct(@RequestBody Orders orders) {
+	public ResponseEntity<?> createOrder(@RequestBody Orders orders) {
 
 		orders.setOrder_id(null);
 

@@ -51,7 +51,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/{id}")
-	public ResponseEntity<?> getProduct(@PathVariable Long id) throws ResourceNotFoundException {
+	public ResponseEntity<?> getProductById(@PathVariable Long id) throws ResourceNotFoundException {
 		
 		Optional<Products> found = repo.findById(id);
 		
