@@ -1,13 +1,6 @@
 package com.cognixia.jump.model;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -52,6 +45,13 @@ public class User implements Serializable {
 	private boolean enabled;
 
 	public User() {
+		this.id = -1L;
+		this.username = "abc";
+		this.password = "123";
+		this.email = "abc@gamil.com";
+		this.address = "address";
+		this.role = role;
+		this.enabled = enabled;
 	}
 
 

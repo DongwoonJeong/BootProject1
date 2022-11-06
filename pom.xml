@@ -71,7 +71,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>
@@ -80,6 +86,11 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		    <testResources>
+                <testResource>
+                    <directory>src/main/webapp</directory>
+                </testResource>
+    </testResources>
 	</build>
 
 </project>
