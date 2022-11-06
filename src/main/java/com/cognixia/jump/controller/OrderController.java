@@ -53,8 +53,6 @@ public class OrderController {
 
 		if (found.isEmpty()) {
 			throw new ResourceNotFoundException("Product with id = " + id + " was not found");
-		}else {
-			System.out.println("asdf");
 		}
 
 		return ResponseEntity.status(200).body(found.get());
