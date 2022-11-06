@@ -1,8 +1,11 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,18 +35,21 @@ public class Orders implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // order id auto increment
 	private Long order_id;
 
+	
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private LocalDateTime order_date;
-
+	
 	@Column(nullable = false)
 	private String order_status;
-	@ManyToOne
+
+	@JsonIgnoreProperties("user")
+	@OneToOne
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="product_id", referencedColumnName = "product_id")
+	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
 	private Products product;
 
 	public Orders() {
@@ -54,6 +63,7 @@ public class Orders implements Serializable {
 		this.order_status = order_status;
 		this.user = user;
 		this.product = product;
+
 	}
 
 	public Long getOrder_id() {
@@ -80,8 +90,6 @@ public class Orders implements Serializable {
 		this.order_status = order_status;
 	}
 
-
-
 	public Products getProduct() {
 		return product;
 	}
@@ -89,15 +97,16 @@ public class Orders implements Serializable {
 	public void setProduct(Products product) {
 		this.product = product;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Orders [order_id=" + order_id + ", order_date=" + order_date + ", order_status=" + order_status

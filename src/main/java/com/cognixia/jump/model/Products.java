@@ -33,21 +33,18 @@ public class Products implements Serializable{
 	@Column(nullable = false)
 	private String description;
 	
-
-	private Orders orders;
-	
 	public Products() {
 		
 	}
 
-	public Products(Long product_id, String name, double price, int qty, String description, Orders orders) {
+	public Products(Long product_id, String name, double price, int qty, String description) {
 		super();
 		this.product_id = product_id;
 		this.name = name;
 		this.price = price;
 		this.qty = qty;
 		this.description = description;
-		this.orders = orders;
+
 	}
 
 	public Long getProduct_id() {
@@ -90,18 +87,11 @@ public class Products implements Serializable{
 		this.description = description;
 	}
 
-	public Orders getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
 
 	@Override
 	public String toString() {
 		return "Products [product_id=" + product_id + ", name=" + name + ", price=" + price + ", qty=" + qty
-				+ ", description=" + description + ", orders=" + orders + "]";
+				+ ", description=" + description + ",]";
 	}
 	
 	

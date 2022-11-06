@@ -6,15 +6,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.cognixia.jump.model.Orders;
+import com.cognixia.jump.model.Products;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.OrderRepository;
+
 
 @Service
 public class OrderService {
 
 	@Autowired
 	OrderRepository repo;
+	
+	
+	
 	
 	//create order.
 	public void createOrder(User user){
@@ -53,7 +59,18 @@ public class OrderService {
 		return false;
 		
 	}
+	// update
+	public Orders get(Long id) {
+		return repo.findById(id).get();
+
+	}
+
+	public Orders save(Orders order) {
+		return repo.save(order);
+
+	}
 	
+
 }
 
 

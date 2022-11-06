@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Table(name = "store_user")
 @Entity
@@ -34,6 +36,8 @@ public class User implements Serializable {
 	
 	@Column(unique = true,nullable = false)
 	@NotBlank(message = "Please enter email.")
+	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+    flags = Pattern.Flag.CASE_INSENSITIVE)
 	private String email;
 	
 	@Column(nullable = false)

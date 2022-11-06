@@ -23,6 +23,18 @@ import com.cognixia.jump.filter.JwtRequestFilter;
 @Configuration
 public class SecurityConfiguration{
 
+    private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+
+    };
 	@Autowired
 	UserDetailsService userDetailsService;
 
@@ -42,13 +54,15 @@ public class SecurityConfiguration{
 
 		http.csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/user/new").permitAll()
+		.antMatchers(AUTH_WHITELIST).permitAll()
 		.antMatchers(HttpMethod.POST,"/products/new").hasRole("ADMIN")
+		.antMatchers(HttpMethod.DELETE,"/user/delete/**").hasRole("ADMIN")
 		.antMatchers("/authenticate").permitAll() // anyone can create a JWT without needing to have a JWT first.
 		//.anyRequest().authenticated() // need some login in order to access any of the APIs.
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// tell spring
 		
 		// security to NOT
-																									// create
+																 									// create
 																									// sessions.dont
 																									// remember
 		//request will go through many filers, but typically the first filter checks the one for username n pw.
@@ -91,6 +105,5 @@ public class SecurityConfiguration{
 	protected AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();
 	}
-
 
 }
