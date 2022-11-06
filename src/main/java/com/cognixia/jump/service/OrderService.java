@@ -1,6 +1,7 @@
 package com.cognixia.jump.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,20 @@ public class OrderService {
 
         repo.save(tempOrder);
     }
+	
+	public boolean deleteOrderById(Long id) {
+		
+		Optional<Orders> found = repo.findById(id);
+		
+		if (!found.isEmpty()) {
+			repo.delete(found.get());
+			return true;
+		}
+		
+		
+		return false;
+		
+	}
 	
 }
 
