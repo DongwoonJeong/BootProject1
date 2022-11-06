@@ -42,9 +42,10 @@ public class UserController {
 		return service.getAllUsers();
 	}
 	
+
 	//create
 	//Create new user
-	@PostMapping("/new")
+	@PostMapping("/signup")
 	public ResponseEntity<?> createUser(@RequestBody User user) throws DuplicateUserException{
 		if(service.checkEmailDuplicate(user.getEmail()) != false) {
 		throw new DuplicateUserException("email already exist in the system!");
