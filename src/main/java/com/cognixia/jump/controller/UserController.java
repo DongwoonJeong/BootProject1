@@ -26,11 +26,6 @@ import com.cognixia.jump.service.UserService;
 public class UserController {
 
 	@Autowired
-	UserRepository repo;
-	
-	@Autowired
-	PasswordEncoder encoder;
-	@Autowired
 	UserService service;
 	
 	
@@ -47,17 +42,7 @@ public class UserController {
 	//Create new user
 	@PostMapping("/signup")
 	public ResponseEntity<?> createUser(@RequestBody User user) throws DuplicateUserException{
-		if(service.checkEmailDuplicate(user.getEmail()) != false) {
-		throw new DuplicateUserException("email already exist in the system!");
-		}else {
-		user.setId(null);
-		//each password for a new user gets encoded
-		user.setPassword(encoder.encode(user.getPassword()));
-		
-		User create = repo.save(user);
-		
-		return ResponseEntity.status(201).body(create);
-		}
+	return service.createUser(user);
 	}
 	//delete
 	//delete user by id
@@ -69,13 +54,7 @@ public class UserController {
 	//update
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable Long id) throws ResourceNotFoundException{
-	    Optional<User> userOptional = repo.findById(id);
-		if(userOptional.isPresent()) {
-		User update = service.get(id);
-	        service.save(user);
-	        return ResponseEntity.status(201).body(update);
-	    }else
-	    	throw new ResourceNotFoundException("User id does not exist.");
+		return service.updateUser(user, id);
 	}
 	}
 	

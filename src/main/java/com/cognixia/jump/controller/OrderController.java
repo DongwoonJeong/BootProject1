@@ -28,34 +28,24 @@ import com.cognixia.jump.service.OrderService;
 public class OrderController {
 	@Autowired
 	OrderService service;
-	@Autowired
-	OrderRepository repo;
 
 	// get all products
 	@GetMapping("/all")
 	public List<Orders> getAllOrder() {
-		return repo.findAll();
+		return service.getAllOrder();
 
 	}
 
 	@PostMapping("/new")
 	public ResponseEntity<?> createOrder(@RequestBody Orders orders) {
 
-		orders.setOrder_id(null);
-		Orders create = repo.save(orders);
-		return ResponseEntity.status(201).body(create);
+		return service.createOrder(orders);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getOrder(@PathVariable Long id) throws ResourceNotFoundException {
 
-		Optional<Orders> found = repo.findById(id);
-
-		if (found.isEmpty()) {
-			throw new ResourceNotFoundException("Product with id = " + id + " was not found");
-		}
-
-		return ResponseEntity.status(200).body(found.get());
+		return service.getOrder(id);
 	}
 
 	@DeleteMapping("/delete/{id}")
@@ -67,13 +57,7 @@ public class OrderController {
 	//update
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateOrder(@RequestBody Orders order, @PathVariable Long id) throws ResourceNotFoundException{
-		Optional<Orders> orderOptional = repo.findById(id);
-		if(orderOptional.isPresent()) {
-		Orders update = service.get(id);
-	        service.save(order);
-	        return ResponseEntity.status(201).body(update);
-	    }else
-	    	throw new ResourceNotFoundException("Order id does not exist.");
-	}
+		return service.updateOrder(order, id);
 
+}
 }

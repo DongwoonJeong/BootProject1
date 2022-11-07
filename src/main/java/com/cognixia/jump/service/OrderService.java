@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Orders;
 import com.cognixia.jump.model.Products;
 import com.cognixia.jump.model.User;
@@ -23,19 +24,25 @@ public class OrderService {
 	
 	
 	//create order.
-	public void createOrder(User user){
-        Orders order = new Orders();
-        order.setUser(user);
-        repo.save(order);
+	public ResponseEntity<?> createOrder(Orders orders){
+		orders.setOrder_id(null);
+		Orders create = repo.save(orders);
+		return ResponseEntity.status(201).body(create);
     }
 	
 	//get all the orderlist.
-	public List<Orders> orderList(){
+	public List<Orders> getAllOrder(){
 		return repo.findAll();
 	}
 	// find order by order number.
-	public Orders orderView(Long id){
-        return repo.findById(id).get();
+	public ResponseEntity<Orders> getOrder(Long id) throws ResourceNotFoundException{
+		Optional<Orders> found = repo.findById(id);
+
+		if (found.isEmpty()) {
+			throw new ResourceNotFoundException("Product with id = " + id + " was not found");
+		}
+
+		return ResponseEntity.status(200).body(found.get());
     }
 	
 	// update the order.
@@ -69,6 +76,17 @@ public class OrderService {
 		return repo.save(order);
 
 	}
+	
+	public ResponseEntity<?> updateOrder(Orders order, Long id) throws ResourceNotFoundException{
+		Optional<Orders> orderOptional = repo.findById(id);
+		if(orderOptional.isPresent()) {
+		Orders update = get(id);
+	        save(order);
+	        return ResponseEntity.status(201).body(update);
+	    }else
+	    	throw new ResourceNotFoundException("Order id does not exist.");
+	}
+	
 	
 
 }
