@@ -36,7 +36,7 @@ public class ProductController {
 	//get all products
 	@GetMapping("/all")
 	public List<Products> getAllproducts() {
-		return repo.findAll();
+		return service.getAllproduct();
 		
 	}
 	@PostMapping("/new")
@@ -53,15 +53,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/{id}")
-	public ResponseEntity<?> getProductById(@PathVariable Long id) throws ResourceNotFoundException {
+	public ResponseEntity<?> getProductById(@PathVariable Long id) throws ResourceNotFoundException{
 		
-		Optional<Products> found = repo.findById(id);
-		
-		if(found.isEmpty()) {
-			throw new ResourceNotFoundException("Product with id = " + id + " was not found");
-		}
-		
-		return ResponseEntity.status(200).body(found.get());
+		return service.getProductById(id);
 	}
 	
 	@DeleteMapping("/delete/{id}")

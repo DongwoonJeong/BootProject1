@@ -7,7 +7,22 @@ import org.junit.jupiter.api.Test;
 class ProductServiceTest {
 
 	@Test
-	void test() {
+	void testCheckNameDuplicate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testDeleteProductById() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGet() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSave() {
 		fail("Not yet implemented");
 	}
 

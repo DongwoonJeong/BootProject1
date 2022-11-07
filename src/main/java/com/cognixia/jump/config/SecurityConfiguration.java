@@ -35,6 +35,14 @@ public class SecurityConfiguration{
             "/swagger-ui/**"
 
     };
+    
+    private static final String[] AUTH_ADMIN = {
+            "/products/new",
+            "/products/delete/{id}",
+            "/products/update/{id}",
+            "/user/delete/{id}",
+            
+    };
 	@Autowired
 	UserDetailsService userDetailsService;
 
@@ -55,8 +63,7 @@ public class SecurityConfiguration{
 		http.csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.POST,"/user/new").permitAll()
 		.antMatchers(AUTH_WHITELIST).permitAll()
-		.antMatchers(HttpMethod.POST,"/products/new").hasRole("ADMIN")
-		.antMatchers(HttpMethod.DELETE,"/user/delete/**").hasRole("ADMIN")
+		.antMatchers(AUTH_ADMIN).hasRole("ADMIN")
 		.antMatchers("/authenticate").permitAll() // anyone can create a JWT without needing to have a JWT first.
 		//.anyRequest().authenticated() // need some login in order to access any of the APIs.
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// tell spring
