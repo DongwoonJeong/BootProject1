@@ -62,4 +62,8 @@ public class ProductController {
 		return service.updateProduct(product, id);
 	}
 	
+	@GetMapping("/product/expensive")
+	public List<Products> getExpensiveProduct(){
+		return service.getExpensiveProduct();
+	}
 }

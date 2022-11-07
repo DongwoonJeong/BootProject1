@@ -47,7 +47,7 @@ public class Orders implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private User user;
-	
+	@JsonIgnoreProperties("product")
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
 	private Products product;

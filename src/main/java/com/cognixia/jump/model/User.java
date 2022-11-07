@@ -45,13 +45,6 @@ public class User implements Serializable {
 	private boolean enabled;
 
 	public User() {
-		this.id = -1L;
-		this.username = "abc";
-		this.password = "123";
-		this.email = "abc@gamil.com";
-		this.address = "address";
-		this.role = role;
-		this.enabled = enabled;
 	}
 
 

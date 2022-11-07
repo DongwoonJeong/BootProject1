@@ -64,9 +64,9 @@ public class SecurityConfiguration{
 		.antMatchers(HttpMethod.POST,"/user/new").permitAll()
 		.antMatchers(AUTH_WHITELIST).permitAll()
 		.antMatchers(AUTH_ADMIN).permitAll()
-		//.antMatchers(AUTH_ADMIN).hasRole("ADMIN")
+		.antMatchers(AUTH_ADMIN).hasRole("ADMIN")
 		.antMatchers("/authenticate").permitAll() // anyone can create a JWT without needing to have a JWT first.
-		//.anyRequest().authenticated() // need some login in order to access any of the APIs.
+		.anyRequest().authenticated() // need some login in order to access any of the APIs.
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// tell spring
 		
 		// security to NOT
