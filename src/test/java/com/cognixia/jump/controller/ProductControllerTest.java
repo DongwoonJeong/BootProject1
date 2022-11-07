@@ -97,10 +97,8 @@ class ProductControllerTest {
 		mockMvc.perform( get(uri,id ) )
 		.andDo( print() )
 		.andExpect( status().isOk() )
-		
-		.andExpect( jsonPath("$.length()").value( product.size() ) )
-		.andExpect( jsonPath("$[0].product_id").value( product.get(0).getProduct_id() ) )
-		.andExpect( jsonPath("$[0].name").value( product.get(0).getName() ) )
+		.andExpect( jsonPath("product_id").value( product.get(0).getProduct_id() ) )
+		.andExpect( jsonPath("name").value( product.get(0).getName() ) )
 		;
 
 		// verify can check how many times a method is called during a test
@@ -117,8 +115,10 @@ class ProductControllerTest {
 	}
 
 	@Test
-	void testUpdateProduct() {
+	void testUpdateProduct() throws Exception {
+
 		fail("Not yet implemented");
 	}
+
 
 }

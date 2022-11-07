@@ -40,16 +40,8 @@ public class ProductController {
 		
 	}
 	@PostMapping("/new")
-	public ResponseEntity<?> createProduct(@RequestBody Products products) throws DuplicateProductException{
-		if(service.checkNameDuplicate(products.getName()) != false) {
-		throw new DuplicateProductException("you are trying to register duplicate item in the system.");
-		}else {
-			products.setProduct_id(null);
-		
-		Products create = repo.save(products);
-		
-		return ResponseEntity.status(201).body(create);
-		}
+	public ResponseEntity<?> createProduct(@RequestBody Products products) throws DuplicateProductException {
+		return service.createProduct(products);
 	}
 	
 	@GetMapping("/product/{id}")
@@ -65,14 +57,9 @@ public class ProductController {
 	}
 	//update
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> updateProduct(@RequestBody Products product, @PathVariable Long id) throws ResourceNotFoundException{
-		 Optional<Products> productOptional = repo.findById(id);
-			if(productOptional.isPresent()) {
-		Products update = service.get(id);
-	        service.save(product);
-	        return ResponseEntity.status(201).body(update);
-	    }else
-	    	throw new ResourceNotFoundException("Product id does not exist.");
+	public ResponseEntity<?> updateProduct(@RequestBody Products product, @PathVariable Long id)
+			throws ResourceNotFoundException {
+		return service.updateProduct(product, id);
 	}
 	
 }
