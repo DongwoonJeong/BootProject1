@@ -32,7 +32,8 @@ public class SecurityConfiguration{
             "/swagger-ui.html",
             "/webjars/**",
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/user/signup"
 
     };
     
@@ -41,6 +42,8 @@ public class SecurityConfiguration{
             "/products/delete/{id}",
             "/products/update/{id}",
             "/user/delete/{id}",
+            "/user/all",
+            "/order/all"
             
     };
 	@Autowired
@@ -61,39 +64,24 @@ public class SecurityConfiguration{
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.POST,"/user/new").permitAll()
 		.antMatchers(AUTH_WHITELIST).permitAll()
-		.antMatchers(AUTH_ADMIN).permitAll()
+//		.antMatchers(AUTH_ADMIN).permitAll()
 		.antMatchers(AUTH_ADMIN).hasRole("ADMIN")
-		.antMatchers("/authenticate").permitAll() // anyone can create a JWT without needing to have a JWT first.
-		.anyRequest().authenticated() // need some login in order to access any of the APIs.
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// tell spring
+		.antMatchers("/authenticate").permitAll() 
+		.anyRequest().authenticated() 
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
-		// security to NOT
-																 									// create
-																									// sessions.dont
-																									// remember
-		//request will go through many filers, but typically the first filter checks the one for username n pw.
-		//but, we will set it up, that our JWT filter gets checked first, or else the authentication will fail, since spring 
-		//security wont know where to find the username n pw.
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 
 	}
 
-	// Encoder -> method help with encoding/decoding all the user password
-	// manage password encoding
 	@Bean
 	protected PasswordEncoder encoder() {
 
-		// plain text encoder ->
-		//return NoOpPasswordEncoder.getInstance();
-
-		// encrypt the password with the bcrypt algorithm
+		
 		 return new BCryptPasswordEncoder();
 	}
-	// load in the encoder & user details service that are needed for security to do
-	// authentication and authorization
 
 	@Bean
 	protected DaoAuthenticationProvider authenticationprovider() {
@@ -106,9 +94,6 @@ public class SecurityConfiguration{
 		return authProvider;
 
 	}
-
-	// can autowire and access the authentication manager (manages authentication
-	// (login) of our project)
 	@Bean
 	protected AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();

@@ -31,39 +31,40 @@ public class ProductController {
 	ProductService service;
 	@Autowired
 	ProductRepository repo;
-	
-	
-	//get all products
+
+	// get all products
 	@GetMapping("/all")
 	public List<Products> getAllproducts() {
 		return service.getAllproduct();
-		
+
 	}
+
 	@PostMapping("/new")
 	public ResponseEntity<?> createProduct(@RequestBody Products products) throws DuplicateProductException {
 		return service.createProduct(products);
 	}
-	
+
 	@GetMapping("/product/{id}")
-	public ResponseEntity<?> getProductById(@PathVariable Long id) throws ResourceNotFoundException{
-		
+	public ResponseEntity<?> getProductById(@PathVariable Long id) throws ResourceNotFoundException {
+
 		return service.getProductById(id);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	public boolean deleteProduct(@PathVariable Long id) {
 
 		return service.deleteProductById(id);
 	}
-	//update
+
+	// update
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateProduct(@RequestBody Products product, @PathVariable Long id)
 			throws ResourceNotFoundException {
 		return service.updateProduct(product, id);
 	}
-	
+
 	@GetMapping("/product/expensive")
-	public List<Products> getExpensiveProduct(){
+	public List<Products> getExpensiveProduct() {
 		return service.getExpensiveProduct();
 	}
 }

@@ -53,11 +53,12 @@ public class OrderController {
 
 		return service.deleteOrderById(id);
 	}
-	
-	//update
+
+	// update
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> updateOrder(@RequestBody Orders order, @PathVariable Long id) throws ResourceNotFoundException{
+	public ResponseEntity<?> updateOrder(@RequestBody Orders order, @PathVariable Long id)
+			throws ResourceNotFoundException {
 		return service.updateOrder(order, id);
 
-}
+	}
 }

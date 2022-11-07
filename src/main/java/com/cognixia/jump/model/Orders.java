@@ -44,7 +44,7 @@ public class Orders implements Serializable {
 	private String order_status;
 
 	@JsonIgnoreProperties("user")
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id", referencedColumnName = "id")
 	private User user;
 	@JsonIgnoreProperties("product")

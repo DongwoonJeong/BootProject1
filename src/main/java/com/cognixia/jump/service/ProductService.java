@@ -83,12 +83,12 @@ public class ProductService {
 			return ResponseEntity.status(201).body(create);
 		}
 	}
-	
+
 	public List<Products> getExpensiveProduct() {
 
-		//return students.stream().filter(s -> s.getGpa() == gpa).collect(Collectors.toList());
+		// return students.stream().filter(s -> s.getGpa() ==
+		// gpa).collect(Collectors.toList());
 		return repo.findProductPriceOver();
 	}
 
 }
-

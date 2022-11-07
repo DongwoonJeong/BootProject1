@@ -55,33 +55,31 @@ public class UserService {
 
 	public User save(User user) {
 		return repo.save(user);
-		
+
 	}
 
-	public ResponseEntity<?> createUser(User user) throws DuplicateUserException{
-		if(checkEmailDuplicate(user.getEmail()) != false) {
+	public ResponseEntity<?> createUser(User user) throws DuplicateUserException {
+		if (checkEmailDuplicate(user.getEmail()) != false) {
 			throw new DuplicateUserException("email already exist in the system!");
-			}else {
+		} else {
 			user.setId(null);
-			//each password for a new user gets encoded
+			// each password for a new user gets encoded
 			user.setPassword(encoder.encode(user.getPassword()));
-			
+
 			User create = repo.save(user);
-			
+
 			return ResponseEntity.status(201).body(create);
-			}
+		}
 
 	}
-	public ResponseEntity<?> updateUser(User user, Long id)throws ResourceNotFoundException{
-	    Optional<User> userOptional = repo.findById(id);
-		if(userOptional.isPresent()) {
-		User update = get(id);
-	        save(user);
-	        return ResponseEntity.status(201).body(update);
-	    }else
-	    	throw new ResourceNotFoundException("User id does not exist.");
-	}
-	}
-	
-	
 
+	public ResponseEntity<?> updateUser(User user, Long id) throws ResourceNotFoundException {
+		Optional<User> userOptional = repo.findById(id);
+		if (userOptional.isPresent()) {
+			User update = get(id);
+			save(user);
+			return ResponseEntity.status(201).body(update);
+		} else
+			throw new ResourceNotFoundException("User id does not exist.");
+	}
+}

@@ -11,30 +11,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Table(name="products")
+@Table(name = "products")
 @Entity
-public class Products implements Serializable{
+public class Products implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long product_id;
-	
+
 	@Column(unique = true, nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private double price;
-	
+
 	@Column(nullable = false)
 	private int qty;
-	
+
 	@Column(nullable = false)
 	private String description;
-	
+
 	public Products() {
-		
+
 	}
 
 	public Products(Long product_id, String name, double price, int qty, String description) {
@@ -87,12 +87,10 @@ public class Products implements Serializable{
 		this.description = description;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Products [product_id=" + product_id + ", name=" + name + ", price=" + price + ", qty=" + qty
 				+ ", description=" + description + ",]";
 	}
-	
-	
+
 }
